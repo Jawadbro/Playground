@@ -51,4 +51,4 @@ class PublicSpeakingCoach:
         response = self.chat.send_message(prompt)
         return response.text
     
-  
+
