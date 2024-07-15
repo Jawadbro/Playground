@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public Speaking Coach</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Public Speaking Coach</h1>
+        
+        <div class="section">
+            <h2>Send Message</h2>
+            <textarea id="userMessage" placeholder="Enter your message here"></textarea>
+            <button onclick="sendMessage()">Send Message</button>
+            <div id="messageResponse" class="response"></div>
+        </div>
+
+        <div class="section">
+            <h2>Show Me How</h2>
+            <textarea id="showMeHowInput" placeholder="Enter your request here"></textarea>
+            <button onclick="showMeHow()">Show Me How</button>
+            <div id="showMeHowResponse" class="response"></div>
+        </div>
+
+        <div class="section">
+            <h2>Upload Audio</h2>
+            <input type="file" id="audioFile" accept="audio/*">
+            <button onclick="uploadAudio()">Upload Audio</button>
+            <div id="audioResponse" class="response"></div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
