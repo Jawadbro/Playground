@@ -32,7 +32,7 @@ async function uploadAudio() {
         return;
     }
     const formData = new FormData();
-    formData.append('audio_file', file);
+    formData.append('file', file);
     
     const response = await fetch('/upload_audio', {
         method: 'POST',
