@@ -11,6 +11,9 @@ genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 elevenlabs_client = ElevenLabs(api_key=os.getenv("ELEVENLABS_API_KEY"))
 app = Flask(__name__)
 coach = PublicSpeakingCoach()
+@app.route('/')
+def home():
+    return "Welcome to the Public Speaking Coach API!"
 @app.route('/send_message', methods=['POST'])
 def send_message():
     data = request.json
