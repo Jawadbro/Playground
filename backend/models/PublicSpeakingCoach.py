@@ -14,10 +14,10 @@ class PublicSpeakingCoach:
         except Exception as e:
             print(f"Error loading model: {e}")
             return None
-    def __upload_audio(self,audio_file_path):
+    def upload_audio(self,audio_file_path):
         audio_file_obj=genai.upload_file(path=audio_file_path)
         return audio_file_obj
-    def __analyze_audio(self,audio_file):
+    def analyze_audio(self,audio_file):
          prompt="You are a speech expert and are great at analyzing startup pitches and giving your critique on them. Listen carefully to the uploaded file, and share as much detail as you can identify including timestamps where the speaker can do better. You should share whichever words/phrases the speaker did well on/where the speaker needs to improve."
          response = self.model.generate_content([audio_file, prompt])
          return response.text
