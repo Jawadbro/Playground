@@ -40,13 +40,28 @@ def show_me_how():
     return jsonify({"response": response_text})
 @app.route('/upload_audio', methods=['POST'])
 def upload_audio():
+    if 'file' not in request.files:
+        return jsonify({"error": "No file part in the request"}), 400
+    
     file = request.files['file']
-    file_path = os.path.join(os.getcwd(), file.filename)
-    file.save(file_path)
     
-    audio_file = coach.upload_audio(file_path)
-    audio_analysis = coach.analyze_audio(audio_file)
+    if file.filename == '':
+        return jsonify({"error": "No selected file"}), 400
     
-    return jsonify({"analysis": audio_analysis})
+    if file:
+        file_path = os.path.join(os.getcwd(), file.filename)
+        file.save(file_path)
+        
+        try:
+            audio_file = coach.upload_audio(file_path)
+            audio_analysis = coach.analyze_audio(audio_file)
+            return jsonify({"analysis": audio_analysis})
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+        finally:
+            # Optionally, remove the file after analysis
+            os.remove(file_path)
+    
+    return jsonify({"error": "Unknown error occurred"}), 500
 if __name__ == '__main__':
     app.run(debug=True)
