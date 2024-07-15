@@ -1,4 +1,5 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify,render_template
+from flask_cors import CORS
 import os
 import google.generativeai as genai
 from elevenlabs import save, stream
@@ -9,11 +10,13 @@ load_dotenv()
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 elevenlabs_client = ElevenLabs(api_key=os.getenv("ELEVENLABS_API_KEY"))
-app = Flask(__name__)
+app = Flask(__name__, template_folder='../frontend/templates', static_folder='../frontend/static')
+CORS(app)
 coach = PublicSpeakingCoach()
+
 @app.route('/')
 def home():
-    return "Welcome to the Public Speaking Coach API!"
+    return render_template('index.html')
 @app.route('/send_message', methods=['POST'])
 def send_message():
     data = request.json
