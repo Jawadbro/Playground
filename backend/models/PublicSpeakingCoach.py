@@ -1,18 +1,27 @@
 import google.generativeai as genai
 
 class PublicSpeakingCoach:
-     def __init__(self, model_name='models/gemini-1.5-flash-latest'):
-        self.model = self.load_model(model_name)
+    def __init__(self, model_name='models/gemini-1.5-flash-latest'):
+        self.model = self._load_model(model_name)
         self.chat=self.model.start_chat(history=[])
         self.steve_jobs_initialized=False
-     def __upload_audio(self,audio_file_path):
+
+    def _load_model(self, model_name):
+        # Example of loading a generative model using genai library
+        try:
+            model = genai.GenerativeModel(model_name)
+            return model
+        except Exception as e:
+            print(f"Error loading model: {e}")
+            return None
+    def __upload_audio(self,audio_file_path):
         audio_file_obj=genai.upload_file(path=audio_file_path)
         return audio_file_obj
-     def __analyze_audio(self,audio_file):
+    def __analyze_audio(self,audio_file):
          prompt="You are a speech expert and are great at analyzing startup pitches and giving your critique on them. Listen carefully to the uploaded file, and share as much detail as you can identify including timestamps where the speaker can do better. You should share whichever words/phrases the speaker did well on/where the speaker needs to improve."
          response = self.model.generate_content([audio_file, prompt])
          return response.text
-     def send_message(self, user_message, audio_analysis=None, audio_transcript=None):
+    def send_message(self, user_message, audio_analysis=None, audio_transcript=None):
         print ("sending message")
 
         prompt = ""
@@ -32,7 +41,7 @@ class PublicSpeakingCoach:
         response = self.chat.send_message(prompt)
         return response.text
 
-     def show_me_how(self, user_message, audio_transcript=None):
+    def show_me_how(self, user_message, audio_transcript=None):
         print ("sending message")
 
         prompt = ""
