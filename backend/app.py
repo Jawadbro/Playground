@@ -4,7 +4,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from flask import Flask, request, jsonify,render_template
 from flask_cors import CORS
-import os
+
 import google.generativeai as genai
 from elevenlabs import save, stream
 from elevenlabs.client import ElevenLabs
