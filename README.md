@@ -1,1 +1,1 @@
-a smart glass 
+a smart pitch deck evaluator 
